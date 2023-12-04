@@ -50,7 +50,7 @@ partial def get_lines (stream : IO.FS.Stream) (l : List String) : IO (List Strin
 Remove space and '\n' characters from a string.
 -/
 def remove_space_endline (s : String) : String :=
-  s.foldl (fun a c ↦ if c != ' ' && c != '¬' then a ++ c.toString else a) ""
+  s.foldl (fun a c ↦ if c != ' ' && c != '\n' then a ++ c.toString else a) ""
 
 /--
 Recover the number of a specific string: "n[red|green|blue]".
