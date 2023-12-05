@@ -5,7 +5,7 @@
 
 namespace List
 /--
-Iterate a function _f_ over a List.
+Iterates a function _f_ over a List.
 -/
 def iter {α : Type u} (l : List α) (f : α -> IO Unit) : IO Unit := do
   match l with
@@ -17,7 +17,7 @@ end List
 
 namespace Array
 /--
-Iterate a function _f_ over an Array.
+Iterates a function _f_ over an Array.
 -/
 def iter {α : Type u} [Inhabited α] (a : Array α) (f : α -> IO Unit) : IO Unit := do
   for i in (List.range a.size) do
@@ -26,7 +26,7 @@ end Array
 
 
 /--
-Read a file
+Reads a file
 -/
 
 def fileStream (filename : System.FilePath) : IO (Option IO.FS.Stream) := do
@@ -47,13 +47,13 @@ partial def get_lines (stream : IO.FS.Stream) (l : List String) : IO (List Strin
     get_lines stream (line :: l)
 
 /--
-Remove space and '\n' characters from a string.
+Removes space and '\n' characters from a string.
 -/
 def remove_space_endline (s : String) : String :=
   s.foldl (fun a c ↦ if c != ' ' && c != '\n' then a ++ c.toString else a) ""
 
 /--
-Recover the number of a specific string: "n[red|green|blue]".
+Recovers the number of a specific string: "n[red|green|blue]".
 Returns the following array: a.set! (0 if red, 1 if green, 2 if blue) n.
 -/
 def get_number_color (s : String) (a : Array Nat) : Array Nat :=
@@ -88,7 +88,7 @@ def remove_color_name (s : String) : Array Nat :=
   aux (s.split (fun c ↦ c == ',')) #[0, 0, 0]
 
 /--
-Format the string containing the games. Take a list of string: ["Game 1: n red, m green, k blue; ...", ..., "Game i: n red, m green, k blue; ..."] and returns of list of lists of arrays: [ [#[n, m, k], #[n, m, k], ...,], ..., [#[n, m, k], #[n, m, k], ...,] ].
+Formats the string containing the games. Take a list of string: ["Game 1: n red, m green, k blue; ...", ..., "Game i: n red, m green, k blue; ..."] and returns of list of lists of arrays: [ [#[n, m, k], #[n, m, k], ...,], ..., [#[n, m, k], #[n, m, k], ...,] ].
 -/
 def format_games (lines : List String) : List (List (Array Nat)) :=
   let no_game_lines := lines.map (fun l ↦ ((remove_space_endline l).dropWhile (fun c ↦ c != ':')).extract (String.Pos.mk 1) (l.endPos))
@@ -107,12 +107,12 @@ Part one
 -/
 
 /--
-Check if an array such that #[n, m, k] is valid w.r.t. the rules conditions.
+Checks if an array such that #[n, m, k] is valid w.r.t. the rules conditions.
 -/
 def check_array (a : Array Nat) : Bool := a.get! 0 <= 12 && a.get! 1 <= 13 && a.get! 2 <= 14
 
 /--
-Check if a game (represented by a list of arrays) is valid by checking all arrays until one is not valid (or each is valid).
+Checks if a game (represented by a list of arrays) is valid by checking all arrays until one is not valid (or each is valid).
 -/
 def check_game (g : List (Array Nat)) : Bool :=
   match g with
@@ -154,13 +154,13 @@ partial def get_max_color (game : List (Array Nat)) : Array Nat :=
   aux 0 #[0, 0, 0]
 
 /--
-Take a game and returns its power (the product of the array returned by *get_max_color*).
+Takes a game and returns its power (the product of the array returned by *get_max_color*).
 -/
 def get_power_game (game : List (Array Nat)) : Nat :=
   (get_max_color game).foldl (fun p e => p*e) 1
 
 /--
-Sum the powers of each game in _games_.
+Sums the powers of each game in _games_.
 -/
 def add_power_games (games : Array (List (Array Nat))) : Nat :=
   games.foldl (fun s g => s + (get_power_game g)) 0

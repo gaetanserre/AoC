@@ -5,7 +5,7 @@
 
 namespace List
 /--
-Iterate a function _f_ over a List.
+Iterates a function _f_ over a List.
 -/
 def iter {α : Type u} (l : List α) (f : α -> IO Unit) : IO Unit := do
   match l with
@@ -17,7 +17,7 @@ end List
 
 namespace Array
 /--
-Iterate a function _f_ over an Array.
+Iterates a function _f_ over an Array.
 -/
 def iter {α : Type u} [Inhabited α] (a : Array α) (f : α -> IO Unit) : IO Unit := do
   for i in (List.range a.size) do
@@ -26,7 +26,7 @@ end Array
 
 
 /--
-Read a file
+Reads a file
 -/
 
 def fileStream (filename : System.FilePath) : IO (Option IO.FS.Stream) := do
@@ -47,7 +47,7 @@ partial def get_lines (stream : IO.FS.Stream) (l : List String) : IO (List Strin
     get_lines stream (line :: l)
 
 /--
-Remove '\n' character from a string.
+Removes '\n' character from a string.
 -/
 def remove_endline (s : String) : String :=
   s.foldl (fun a c ↦ if c != '\n' then a ++ c.toString else a) ""
@@ -67,7 +67,7 @@ def list_string_to_list_nat (l : List String) : List Nat :=
   aux l
 
 /--
-Separate the data of a card to an array containing the list of winning numbers and the list of actual numbers.
+Separates the data of a card to an array containing the list of winning numbers and the list of actual numbers.
 -/
 def split_numbers (s : String) : Array (List Nat) :=
   let ls := (s.split (fun c ↦ c == '|')).toArray
@@ -75,7 +75,7 @@ def split_numbers (s : String) : Array (List Nat) :=
   #[list_string_to_list_nat (l1.split (fun c ↦ c == ' ')), list_string_to_list_nat (l2.split (fun c ↦ c == ' '))]
 
 /--
-Check how many number in _numbers_ are winning ones.
+Checks how many number in _numbers_ are winning ones.
 -/
 def check_match_numbers (winning : List Nat) (numbers : List Nat) : Nat :=
   let rec aux (numbers : List Nat) (count : Nat) :=
@@ -108,7 +108,7 @@ Part two
 -/
 
 /--
-Compute the total number of each cards. The array nb_copies contained the number of each card. The list _cards_ contains each unique card. For each card _c_ in _cards_, iterate through the winning number of _c_ and, for each card it should copy, add the number of copies of _c_ in nb_copies.
+Computes the total number of each cards. The array nb_copies contained the number of each card. The list _cards_ contains each unique card. For each card _c_ in _cards_, iterate through the winning number of _c_ and, for each card it should copy, add the number of copies of _c_ in nb_copies.
 -/
 def add_copies (nb_copies : Array Nat) (cards : List Nat) : Array Nat :=
   let rec aux (cards : List Nat) (idx : Nat) (nb_copies : Array Nat) :=
@@ -133,7 +133,7 @@ partial def mk_one_array (n : Nat) :=
   Array.mk (aux 0 [])
 
 /--
-Sum the total number of copies.
+Sums the total number of copies.
 -/
 def sum_copies (l : List Nat) :=
   l.foldl (fun s e ↦ s + e) 0

@@ -3,7 +3,7 @@
 -/
 
 /--
-Read a file
+Reads a file
 -/
 
 def fileStream (filename : System.FilePath) : IO (Option IO.FS.Stream) := do
