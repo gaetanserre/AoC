@@ -11,5 +11,5 @@ lean_lib «Seven» {
 
 
 @[default_target]
-lean_exe «seven_b» where
-  root := `seven_b
+lean_exe «seven_a» where
+  root := `seven_a
