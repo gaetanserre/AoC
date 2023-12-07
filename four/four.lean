@@ -28,23 +28,8 @@ end Array
 /--
 Reads a file
 -/
-
-def fileStream (filename : System.FilePath) : IO (Option IO.FS.Stream) := do
-  let fileExists ← filename.pathExists
-  if not fileExists then
-    let stderr ← IO.getStderr
-    stderr.putStrLn s!"File not found: {filename}"
-    pure none
-  else
-    let handle ← IO.FS.Handle.mk filename IO.FS.Mode.read
-    pure (some (IO.FS.Stream.ofHandle handle))
-
-partial def get_lines (stream : IO.FS.Stream) (l : List String) : IO (List String) := do
-  let line ← stream.getLine
-  if line.isEmpty then
-    pure l.reverse
-  else
-    get_lines stream (line :: l)
+def get_lines (filename : System.FilePath) : IO (List String) :=
+  (IO.FS.lines filename) >>= (fun a ↦ pure (a.data))
 
 /--
 Removes '\n' character from a string.
@@ -146,10 +131,5 @@ def print_results (lines : List String) : IO Unit := do
   IO.println s!"Part one: {sum_points cards} Part two: {sum_copies final_copies.data}"
 
 def main : IO Unit := do
-let stream ← fileStream "data.txt"
-  match stream with
-  | none =>
-    pure ()
-  | some stream =>
-    let lines := get_lines stream []
-    lines >>= print_results
+  let lines := get_lines "data.txt"
+  lines >>= print_results
