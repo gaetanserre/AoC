@@ -238,10 +238,10 @@ def print_results (lines : List String) : IO Unit := do
   IO.println s!"Part one {min_location} Part two {min_location_ranges}"
 
 def main : IO Unit := do
-let stream ← fileStream "data.txt"
-  match stream with
-  | none =>
-    pure ()
-  | some stream =>
-    let lines := get_lines stream []
-    lines >>= print_results
+  let stream ← fileStream "data.txt"
+    match stream with
+    | none =>
+      pure ()
+    | some stream =>
+      let lines := get_lines stream []
+      lines >>= print_results
