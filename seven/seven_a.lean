@@ -23,6 +23,9 @@ instance : BEq Card where
 
 end Card
 
+/--
+Compare two hands by first checking the type and then each card of both hands.
+-/
 partial def compare (h1 h2 : HandT) : Bool :=
   if h1.natOfHandT < h2.natOfHandT then true
   else if h1.natOfHandT > h2.natOfHandT then false

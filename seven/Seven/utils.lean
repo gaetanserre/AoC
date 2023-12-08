@@ -99,6 +99,9 @@ instance : ToString (HandT) where
 
 end HandT
 
+/--
+Deduces from the number of unique cards and removed cards which hand it is.
+-/
 def get_hand_from_removed_and_unique (lc : List Card) (removed : Array Card) (unique : Array Card) : HandT :=
   match unique.size with
   | 5 => HandT.Card lc
@@ -118,6 +121,9 @@ def get_hand_from_removed_and_unique (lc : List Card) (removed : Array Card) (un
 
 variable [BEq Card] [LE Card] [DecidableRel ((. <= .) : Card → Card → Prop)] [LE HandT] [DecidableRel ((. <= .) : HandT → HandT → Prop)]
 
+/--
+Transforms a list of cards to a hand. Keep track of unique cards and removed cards to call *get_hand_from_removed_and_unique*.
+-/
 def HandTOfcard (lc : List Card) : HandT :=
   let rec aux lc_aux (removed : Array Card) (unique : Array Card) :=
     match lc_aux with
@@ -140,6 +146,9 @@ partial def get_max_idx {α : Type u} [LE α] [DecidableRel ((. <= .) : α → �
   aux 0 (a.get! 0) 0
 end Array
 
+/--
+Transforms a list of cards to a hand. When encounter a Joker, duplicates the card that have been removed the most. If no card has been removed, select a random one to copy. Keep track of unique cards and removed cards to call *get_hand_from_removed_and_unique*.
+-/
 def HandTOfcard2 (lc : List Card) :=
   let rec aux lc_aux (removed : Array Card) (removed_c : Array Nat) (unique : Array Card) :=
     match lc_aux with

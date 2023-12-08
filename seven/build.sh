@@ -6,5 +6,5 @@ cp lakefile_b.lean lakefile.lean
 lake build
 
 
-./.lake/build/bin/seven_a
-./.lake/build/bin/seven_b
+.lake/build/bin/seven_a
+.lake/build/bin/seven_b
