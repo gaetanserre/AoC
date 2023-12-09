@@ -11,13 +11,13 @@ def parse_line (line : String) : List Int :=
     | [] => []
     | hd :: tl =>
       hd.toInt! :: aux tl
-  aux (line.split (fun c ↦ c == ' '))
+  aux (line.split (λ c ↦ c == ' '))
 
 /--
 Given a list of Int, computes the list of the differences between the i-th and the (i + 1)-th elements e.g. : [1, 2, 4] ↦ [1, 2].
 -/
 def create_list_difference (l : List Int) : List Int :=
-  ((l.tail!).foldl (fun mem i => (i, (i - mem.1) :: mem.2)) (l.head!, [])).2.reverse
+  ((l.tail!).foldl (λ mem i => (i, (i - mem.1) :: mem.2)) (l.head!, [])).2.reverse
 
 /--
 Checks if a list of Int is filled with zeros.
@@ -60,7 +60,7 @@ def sum_all_placeholder (lines : List String) (minus : Bool) : Int :=
     match l with
     | [] => res
     | s :: tl =>
-      let res := res + ((fun l ↦ fill_placeholder l minus) <| difference_until_zero <| parse_line s).head!
+      let res := res + ((λ l ↦ fill_placeholder l minus) <| difference_until_zero <| parse_line s).head!
       aux tl res
   aux lines 0
 
