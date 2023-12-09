@@ -60,7 +60,7 @@ def sum_all_placeholder (lines : List String) (minus : Bool) : Int :=
     match l with
     | [] => res
     | s :: tl =>
-      let res := res + ((λ l ↦ fill_placeholder l minus) <| difference_until_zero <| parse_line s).head!
+      let res := res + ((fill_placeholder . minus) <| difference_until_zero <| parse_line s).head!
       aux tl res
   aux lines 0
 
