@@ -4,7 +4,6 @@
 
 import Lean.Data.HashMap
 
-import Eight.readFile
 import Eight.circular_array
 
 open Nat
@@ -168,4 +167,4 @@ def print_results (lines : Array String) : IO Unit :=
   IO.println s!"Part one: {step_1} Part two: {step_2}"
 
 def main : IO Unit :=
-  get_lines "data.txt" >>= print_results
+  IO.FS.lines "data.txt" >>= print_results
